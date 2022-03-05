@@ -1,0 +1,19 @@
+{
+  "name": "estagio2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/eneasgurgel/estagio2.git",
+  "author": "Gabriel Bezerra <gabrielbrodrigues1@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "ts-node-dev ./src/server.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "ts-node-dev": "^1.1.8"
+  }
+}
