@@ -1,4 +1,5 @@
 import express from 'express'
+import router from './routes';
 
 class App {
     public app : express.Application;
@@ -14,6 +15,7 @@ class App {
     }
   
     routes() {
+      router(this.app)
     }
   }
   
