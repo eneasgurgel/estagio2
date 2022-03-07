@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import walletsServices from '../services/wallets.services';
 
 class WalletsController {
-    create(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
         const { body } = req;
-        const newWallet = walletsServices.create(body);
+        const newWallet = await walletsServices.create(body);
         return res.status(201).json(newWallet);
     }
 
-    get(req: Request, res: Response) {
-        const allWallets = walletsServices.getAll();
+    async get(req: Request, res: Response) {
+        const allWallets = await walletsServices.getAll();
         return res.status(200).json(allWallets);
     }
 

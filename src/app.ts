@@ -1,5 +1,6 @@
 import express from 'express';
 import router from './routes';
+import './infra/db';
 
 class App {
     public app: express.Application;

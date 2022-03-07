@@ -1,10 +1,12 @@
+import walletsRepository from '../repository/wallets.repository';
+
 class WalletsServices {
-    create(data: any) {
-        return data;
+    async create(data: any) {
+        return walletsRepository.create(data);
     }
 
-    getAll() {
-        return 'TODO';
+    async getAll() {
+        return walletsRepository.findAll();
     }
 
     getOneId(id: string) {
