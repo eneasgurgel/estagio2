@@ -9,16 +9,16 @@ class WalletsServices {
         return walletsRepository.findAll();
     }
 
-    getOneId(id: string) {
-        return id;
+    async getOneId(id: string) {
+        return walletsRepository.findOne(id);
     }
 
-    updateOne(id: string, data: any) {
-        return `${id}, ${data}`;
+    async updateOne(id: string, data: any) {
+        return walletsRepository.update(id, data);
     }
 
-    deleteOne(id: string) {
-        return id;
+    async deleteOne(id: string) {
+        return walletsRepository.remove(id);
     }
 }
 

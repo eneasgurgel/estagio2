@@ -13,22 +13,22 @@ class WalletsController {
         return res.status(200).json(allWallets);
     }
 
-    getOne(req: Request, res: Response) {
+    async getOne(req: Request, res: Response) {
         const { id } = req.params;
-        const oneWallet = walletsServices.getOneId(id);
+        const oneWallet = await walletsServices.getOneId(id);
         return res.status(200).json(oneWallet);
     }
 
-    updateOne(req: Request, res: Response) {
+    async updateOne(req: Request, res: Response) {
         const { id } = req.params;
         const { body } = req;
-        const updateWallet = walletsServices.updateOne(id, body);
+        const updateWallet = await walletsServices.updateOne(id, body);
         return res.status(200).json(updateWallet);
     }
 
-    deleteOne(req: Request, res: Response) {
+    async deleteOne(req: Request, res: Response) {
         const { id } = req.params;
-        walletsServices.deleteOne(id);
+        await walletsServices.deleteOne(id);
         return res.status(204).end();
     }
 }
