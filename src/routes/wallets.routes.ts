@@ -1,4 +1,5 @@
 import { Application, Router } from 'express';
+import authController from '../app/controllers/auth.controller';
 import walletsController from '../app/controllers/wallets.controller';
 
 export default async (server: Application, routes: Router, prefix = '/api/v1/wallets') => {
@@ -7,6 +8,7 @@ export default async (server: Application, routes: Router, prefix = '/api/v1/wal
     routes.get('/:id', walletsController.getOne);
     routes.put('/:id', walletsController.updateOne);
     routes.delete('/:id', walletsController.deleteOne);
+    routes.post('/login/', authController.login);
 
     server.use(prefix, routes);
 };
