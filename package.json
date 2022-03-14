@@ -6,6 +6,8 @@
   "author": "Gabriel Bezerra <gabrielbrodrigues1@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "pre:start":"tsc",
+    "start":"node dist/server.js cd client npm start",
     "start:dev": "ts-node-dev ./src/server.ts"
   },
   "dependencies": {
