@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "build":"tsc",
-    "start": "tsc && node dist/server.js",
+    "start": "node dist/server.js",
     "start:dev": "ts-node-dev ./src/server.ts",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "tsc && cd client && npm install && npm run build"
   },
   "dependencies": {
     "typescript": "^4.6.2",
