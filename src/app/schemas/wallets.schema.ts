@@ -3,20 +3,21 @@ import mongoose from 'mongoose';
 import { hash } from 'bcryptjs';
 
 const walletsSchema = new mongoose.Schema({
-    address: {
-        type: String
-    },
     full_name: {
-        type: String
+        type: String,
+        required: true
     },
     cpf: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     }
 });
 
