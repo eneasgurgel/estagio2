@@ -4,8 +4,13 @@ import authService from '../services/auth.services';
 class AuthController {
     async login(req: Request, res: Response) {
         const { body } = req;
-        const login = await authService.login(body);
-        return res.status(200).json(login);
+        await authService
+            .login(body)
+            .then((data) => res.status(200).json(data))
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 }
 

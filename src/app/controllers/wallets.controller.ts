@@ -4,32 +4,57 @@ import walletsServices from '../services/wallets.services';
 class WalletsController {
     async create(req: Request, res: Response) {
         const { body } = req;
-        const newWallet = await walletsServices.create(body);
-        return res.status(201).json(newWallet);
+        await walletsServices
+            .create(body)
+            .then((data) => res.status(200).json(data))
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 
     async get(req: Request, res: Response) {
-        const allWallets = await walletsServices.getAll();
-        return res.status(200).json(allWallets);
+        await walletsServices
+            .getAll()
+            .then((data) => res.status(200).json(data))
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 
     async getOne(req: Request, res: Response) {
         const { id } = req.params;
-        const oneWallet = await walletsServices.getOneId(id);
-        return res.status(200).json(oneWallet);
+        await walletsServices
+            .getOneId(id)
+            .then((data) => res.status(200).json(data))
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 
     async updateOne(req: Request, res: Response) {
         const { id } = req.params;
         const { body } = req;
-        const updateWallet = await walletsServices.updateOne(id, body);
-        return res.status(200).json(updateWallet);
+        await walletsServices
+            .updateOne(id, body)
+            .then((data) => res.status(200).json(data))
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 
     async deleteOne(req: Request, res: Response) {
         const { id } = req.params;
-        await walletsServices.deleteOne(id);
-        return res.status(204).end();
+        await walletsServices
+            .deleteOne(id)
+            .then(() => res.status(204).end())
+            .catch((err: any) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
     }
 }
 

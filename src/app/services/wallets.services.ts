@@ -1,16 +1,23 @@
+import NotFound from '../error/NotFound';
 import walletsRepository from '../repository/wallets.repository';
 
 class WalletsServices {
     async create(data: any) {
-        return walletsRepository.create(data);
+        const newWallet = await walletsRepository.create(data);
+        if (!newWallet) throw new Error();
+        return newWallet;
     }
 
     async getAll() {
-        return walletsRepository.findAll();
+        const allWallets = await walletsRepository.findAll();
+        if (allWallets.length === 0) throw new NotFound('carteiras não encontradas');
+        return allWallets;
     }
 
     async getOneId(id: string) {
-        return walletsRepository.findOne(id);
+        const oneWallet = await walletsRepository.findOne(id);
+        if (!oneWallet) throw new NotFound('carteira não encontrada');
+        return oneWallet;
     }
 
     async updateOne(id: string, data: any) {

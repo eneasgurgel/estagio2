@@ -2,20 +2,16 @@ import { compare } from 'bcryptjs';
 import * as jose from 'jose';
 import walletsRepository from '../repository/wallets.repository';
 import 'dotenv/config';
+import Unauthorized from '../error/Unauthorized';
 
 require('dotenv').config();
 
 class AuthService {
     async login(body: any) {
-        console.log(body);
         const user = await walletsRepository.findOneEmail(body.email);
-        console.log(user);
-        if (!user) {
-            return;
-        }
         const comparePassword = await compare(body.password, user.password);
-        if (!comparePassword) {
-            return;
+        if (!comparePassword || !user) {
+            throw new Unauthorized('email ou senha invalidas');
         }
         const secret = new Uint8Array([9, 8]);
         const loginToken = await new jose.SignJWT({
