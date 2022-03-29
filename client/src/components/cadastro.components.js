@@ -10,9 +10,9 @@ export default class Cadastro extends Component {
         password: "",
     }
 
-     handleSignUp=event=>{
+     handleSignUp=async event=>{
         event.preventDefault()
-        api.post('/api/v1/wallets', this.state)
+        await api.post('/api/v1/wallets', this.state)
     }
     render() {
         return (

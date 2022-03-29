@@ -18,7 +18,13 @@ const walletsSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    coins: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Coins'
+        }
+    ]
 });
 
 walletsSchema.pre('save', async function encryptPass(next) {
