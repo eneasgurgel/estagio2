@@ -22,7 +22,7 @@ const walletsSchema = new mongoose.Schema({
     coins: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Coins'
+            refPath: 'Coins'
         }
     ]
 });
