@@ -1,5 +1,7 @@
 import NotFound from '../error/NotFound';
+import coinsRepository from '../repository/coins.repository';
 import walletsRepository from '../repository/wallets.repository';
+import coinsServices from './coins.services';
 
 class WalletsServices {
     async create(data: any) {
@@ -9,8 +11,7 @@ class WalletsServices {
     }
 
     async getAll() {
-        const allWallets = await walletsRepository.findAll();
-        if (allWallets.length === 0) throw new NotFound('carteiras não encontradas');
+        const allWallets = await walletsRepository.findPopulated();
         return allWallets;
     }
 
@@ -18,6 +19,15 @@ class WalletsServices {
         const oneWallet = await walletsRepository.findOne(id);
         if (!oneWallet) throw new NotFound('carteira não encontrada');
         return oneWallet;
+    }
+
+    async addFunds(id: string, body: any) {
+        const getCoin = await coinsRepository.findUniqueCoin(body.coin, id);
+        const coinData = await coinsServices.getData(body);
+        console.log(body);
+        if (!getCoin) return coinsServices.createNewCoin(coinData, id);
+
+        return getCoin;
     }
 
     async updateOne(id: string, data: any) {

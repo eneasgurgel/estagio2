@@ -9,6 +9,10 @@ class NewsRepository extends Repository {
     async findOneEmail(email: any) {
         return WalletsSchema.findOne({ email });
     }
+
+    async findPopulated() {
+        return WalletsSchema.find().populate('coins');
+    }
 }
 
 export default new NewsRepository();
