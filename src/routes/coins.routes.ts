@@ -2,7 +2,8 @@ import { Application, Router } from 'express';
 import coinsController from '../app/controllers/coins.controller';
 
 export default async (server: Application, routes: Router, prefix = '/api/v1/coins') => {
-    routes.get('/:id', coinsController.getData);
+    routes.post('/new/:id', coinsController.newTransation);
+    routes.get('/:address', coinsController.getAddressCoins);
 
     server.use(prefix, routes);
 };
