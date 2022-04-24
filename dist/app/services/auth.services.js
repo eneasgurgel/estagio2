@@ -39,19 +39,15 @@ const bcryptjs_1 = require("bcryptjs");
 const jose = __importStar(require("jose"));
 const wallets_repository_1 = __importDefault(require("../repository/wallets.repository"));
 require("dotenv/config");
+const Unauthorized_1 = __importDefault(require("../error/Unauthorized"));
 require('dotenv').config();
 class AuthService {
     login(body) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(body);
             const user = yield wallets_repository_1.default.findOneEmail(body.email);
-            console.log(user);
-            if (!user) {
-                return;
-            }
             const comparePassword = yield (0, bcryptjs_1.compare)(body.password, user.password);
-            if (!comparePassword) {
-                return;
+            if (!comparePassword || !user) {
+                throw new Unauthorized_1.default('email ou senha invalidas');
             }
             const secret = new Uint8Array([9, 8]);
             const loginToken = yield new jose.SignJWT({

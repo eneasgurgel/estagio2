@@ -12,21 +12,41 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const NotFound_1 = __importDefault(require("../error/NotFound"));
+const coins_repository_1 = __importDefault(require("../repository/coins.repository"));
 const wallets_repository_1 = __importDefault(require("../repository/wallets.repository"));
+const coins_services_1 = __importDefault(require("./coins.services"));
 class WalletsServices {
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return wallets_repository_1.default.create(data);
+            const newWallet = yield wallets_repository_1.default.create(data);
+            if (!newWallet)
+                throw new Error();
+            return newWallet;
         });
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return wallets_repository_1.default.findAll();
+            const allWallets = yield wallets_repository_1.default.findAll();
+            return allWallets;
         });
     }
     getOneId(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return wallets_repository_1.default.findOne(id);
+            const oneWallet = yield wallets_repository_1.default.findOne(id);
+            if (!oneWallet)
+                throw new NotFound_1.default('carteira não encontrada');
+            return oneWallet;
+        });
+    }
+    addFunds(id, body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let getCoin = yield coins_repository_1.default.findUniqueCoin(body.coin, id);
+            const coinData = yield coins_services_1.default.getData(body);
+            if (!getCoin)
+                getCoin = yield coins_services_1.default.createNewCoin(coinData, id);
+            yield coins_services_1.default.convertCoinAmount(getCoin, coinData, body);
+            return getCoin;
         });
     }
     updateOne(id, data) {

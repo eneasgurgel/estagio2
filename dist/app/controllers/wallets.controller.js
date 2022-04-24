@@ -17,36 +17,61 @@ class WalletsController {
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { body } = req;
-            const newWallet = yield wallets_services_1.default.create(body);
-            return res.status(201).json(newWallet);
+            yield wallets_services_1.default
+                .create(body)
+                .then((data) => res.status(200).json(data))
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
     get(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const allWallets = yield wallets_services_1.default.getAll();
-            return res.status(200).json(allWallets);
+            yield wallets_services_1.default
+                .getAll()
+                .then((data) => res.status(200).json(data))
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const oneWallet = yield wallets_services_1.default.getOneId(id);
-            return res.status(200).json(oneWallet);
+            yield wallets_services_1.default
+                .getOneId(id)
+                .then((data) => res.status(200).json(data))
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
     updateOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const { body } = req;
-            const updateWallet = yield wallets_services_1.default.updateOne(id, body);
-            return res.status(200).json(updateWallet);
+            yield wallets_services_1.default
+                .updateOne(id, body)
+                .then((data) => res.status(200).json(data))
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
     deleteOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            yield wallets_services_1.default.deleteOne(id);
-            return res.status(204).end();
+            yield wallets_services_1.default
+                .deleteOne(id)
+                .then(() => res.status(204).end())
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
 }

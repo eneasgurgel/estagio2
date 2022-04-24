@@ -14,9 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const wallets_routes_1 = __importDefault(require("./wallets.routes"));
+const coins_routes_1 = __importDefault(require("./coins.routes"));
 exports.default = (server) => __awaiter(void 0, void 0, void 0, function* () {
     server.use((req, res, next) => {
         (0, wallets_routes_1.default)(server, (0, express_1.Router)());
+        (0, coins_routes_1.default)(server, (0, express_1.Router)());
         next();
     });
 });

@@ -6,8 +6,7 @@
   "author": "Gabriel Bezerra <gabrielbrodrigues1@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "aa": "&& cd client && npm install --legacy-peer-deps && npm run build",
+    "build": "tsc && cd client && npm install --legacy-peer-deps && npm run build",
     "start": "node dist/server.js",
     "start:dev": "ts-node-dev ./src/server.ts"
   },

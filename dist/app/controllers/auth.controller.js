@@ -17,8 +17,13 @@ class AuthController {
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { body } = req;
-            const login = yield auth_services_1.default.login(body);
-            return res.status(200).json(login);
+            yield auth_services_1.default
+                .login(body)
+                .then((data) => res.status(200).json(data))
+                .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json({ error: err.message });
+            });
         });
     }
 }

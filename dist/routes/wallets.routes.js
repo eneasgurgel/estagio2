@@ -14,12 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const auth_controller_1 = __importDefault(require("../app/controllers/auth.controller"));
 const wallets_controller_1 = __importDefault(require("../app/controllers/wallets.controller"));
+const idvalidation_1 = __importDefault(require("../app/validations/idvalidation"));
+const postWalletValidation_1 = __importDefault(require("../app/validations/wallets/postWalletValidation"));
 exports.default = (server, routes, prefix = '/api/v1/wallets') => __awaiter(void 0, void 0, void 0, function* () {
-    routes.post('/', wallets_controller_1.default.create);
+    routes.post('/', postWalletValidation_1.default, wallets_controller_1.default.create);
     routes.get('/', wallets_controller_1.default.get);
-    routes.get('/:id', wallets_controller_1.default.getOne);
-    routes.put('/:id', wallets_controller_1.default.updateOne);
-    routes.delete('/:id', wallets_controller_1.default.deleteOne);
+    routes.get('/:id', idvalidation_1.default, wallets_controller_1.default.getOne);
+    routes.put('/:id', idvalidation_1.default, wallets_controller_1.default.updateOne);
+    routes.delete('/:id', idvalidation_1.default, wallets_controller_1.default.deleteOne);
     routes.post('/login/', auth_controller_1.default.login);
     server.use(prefix, routes);
 });

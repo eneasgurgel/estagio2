@@ -15,21 +15,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcryptjs_1 = require("bcryptjs");
 const walletsSchema = new mongoose_1.default.Schema({
-    address: {
-        type: String
-    },
     full_name: {
-        type: String
+        type: String,
+        required: true
     },
     cpf: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
-        type: String
-    }
+        type: String,
+        required: true
+    },
+    coins: [
+        {
+            type: mongoose_1.default.Schema.Types.ObjectId,
+            refPath: 'Coins'
+        }
+    ]
 });
 walletsSchema.pre('save', function encryptPass(next) {
     return __awaiter(this, void 0, void 0, function* () {
