@@ -14,6 +14,14 @@ class CoinsRepository extends Repository {
     async findUniqueCoin(coin: string, address: string) {
         return CoinsSchema.findOne({ coin, address });
     }
+
+    async updateFunds(address: string, amount: number) {
+        return CoinsSchema.findByIdAndUpdate(address, { amount });
+    }
+
+    async findAddressCoins(address: string) {
+        return CoinsSchema.find({ address });
+    }
 }
 
 export default new CoinsRepository();

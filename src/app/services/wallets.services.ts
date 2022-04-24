@@ -11,7 +11,7 @@ class WalletsServices {
     }
 
     async getAll() {
-        const allWallets = await walletsRepository.findPopulated();
+        const allWallets = await walletsRepository.findAll();
         return allWallets;
     }
 
@@ -22,10 +22,10 @@ class WalletsServices {
     }
 
     async addFunds(id: string, body: any) {
-        const getCoin = await coinsRepository.findUniqueCoin(body.coin, id);
+        let getCoin = await coinsRepository.findUniqueCoin(body.coin, id);
         const coinData = await coinsServices.getData(body);
-        console.log(body);
-        if (!getCoin) return coinsServices.createNewCoin(coinData, id);
+        if (!getCoin) getCoin = await coinsServices.createNewCoin(coinData, id);
+        await coinsServices.convertCoinAmount(getCoin, coinData, body);
 
         return getCoin;
     }
