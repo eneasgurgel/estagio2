@@ -1,7 +1,6 @@
 import axios from 'axios';
 import authHeader from './authHeader';
-import 'dotenv/config';
-const API_URL = process.env.URL || "http://localhost:3000/api/v1/wallets/";
+const API_URL = process.env.URL || "http://wallets2.herokuapp.com/api/v1/wallets";
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + 'all');
