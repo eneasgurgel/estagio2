@@ -15,7 +15,9 @@ class AuthService {
         }
         const secret = new Uint8Array([9, 8]);
         const loginToken = await new jose.SignJWT({
-            user: user.email
+            id: user.id,
+            user: user.email,
+            name: user.full_name
         })
             .setExpirationTime('1h')
             .setProtectedHeader({ alg: 'HS256' })

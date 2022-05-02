@@ -1,6 +1,5 @@
-import { AlignVerticalBottomSharp } from "@mui/icons-material";
+
 import {
-    makeStyles,
     Container,
     Typography,
     TextField,
@@ -11,35 +10,33 @@ import {
     Grid,
     Link,
   } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import NavBarAlt from "../navbar/navBarAlt";
-
-  /*const useStyles = makeStyles((theme) => ({
-    heading: {
-      textAlign: "center",
-      margin: theme.spacing(1, 0, 4),
-    },
-    submitButton: {
-      marginTop: theme.spacing(4),
-    },
-  }));*/
+import AuthServices from "../../services/AuthServices";
+import { useNavigate } from "react-router-dom";
 
 export default function Register(){
-
-    //const { heading, submitButton } = useStyles();
-
-    const darkTheme = createTheme({
-      palette: {
-        mode: 'dark',
-      },
-    });
+    const [name, setName] = useState<string>()
+    const [cpf, setCPF] = useState<string>()
+    const [email, setEmail] = useState<string>()
+    const [senha, setSenha] = useState<string>()
+    const navigate = useNavigate()
 
     
 
-    const [json, setJson] = useState<string>();
-
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+         const data = {
+             full_name: name,
+             cpf: cpf,
+             email: email,
+             password: senha
+         }
+         await AuthServices.register(data)
+         navigate('/')
+         
+      };
 
     return (
       <><NavBarAlt />
@@ -60,7 +57,7 @@ export default function Register(){
             Registro
           </Typography>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextField
               required
               id="outlined-required"
@@ -68,6 +65,7 @@ export default function Register(){
               defaultValue=""
               margin="dense" 
               fullWidth
+              onChange={event => {setName(event.target.value)}}
             />
             <TextField
               required
@@ -76,6 +74,7 @@ export default function Register(){
               defaultValue=""
               margin="dense" 
               fullWidth
+              onChange={event => {setCPF(event.target.value)}}
             />
             <TextField
               required
@@ -84,6 +83,7 @@ export default function Register(){
               defaultValue=""
               margin="dense" 
               fullWidth
+              onChange={event => {setEmail(event.target.value)}}
             />
             <TextField
               required
@@ -92,14 +92,7 @@ export default function Register(){
               type="password"
               margin="dense"
               fullWidth
-            />
-            <TextField
-              required
-              id="outlined-password-input"
-              label="Confirmação de Senha"
-              type="password"
-              margin="dense"
-              fullWidth
+              onChange={event => {setSenha(event.target.value)}}
             />
             <Button
               type="submit"
@@ -115,15 +108,6 @@ export default function Register(){
                     {"Já possui uma conta? Entre!"}
                   </Link>
             </Grid>
-            {json && (
-              <>
-                <Typography variant="body1">
-                  Below is the JSON that would normally get passed to the server
-                  when a form gets submitted
-                </Typography>
-                <Typography variant="body2">{json}</Typography>
-              </>
-            )}
             
           </form>
         </Box>

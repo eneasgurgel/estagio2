@@ -7,6 +7,7 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import './App.css';
+import Application from './components/application/application';
 import Home from './components/home/home';
 import Login from './components/login/login';
 import Register from './components/register/register';
@@ -28,6 +29,7 @@ function App() {
           <Route path='/' element={<Home/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
+          <Route path='/home' element={<Application/>}></Route>
         </Routes>
         </BrowserRouter>
       

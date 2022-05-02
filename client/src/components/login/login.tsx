@@ -12,15 +12,23 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import NavBarAlt from "../navbar/navBarAlt";
+import AuthServices from '../../services/AuthServices';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+export default function Login() {
+
+    const [email, setEmail] = useState<string>()
+    const [senha, setSenha] = useState<string>()
+    const navigate = useNavigate()
+
+ 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data = {email, password: senha}
+    await AuthServices.login(data)
+    navigate('/home')
+
   };
 
   return (
@@ -51,6 +59,7 @@ export default function login() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={event => {setEmail(event.target.value)}}
             />
             <TextField
               margin="normal"
@@ -61,6 +70,7 @@ export default function login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={event => {setSenha(event.target.value)}}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
