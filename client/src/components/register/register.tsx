@@ -15,20 +15,23 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 import NavBarAlt from "../navbar/navBarAlt";
 import AuthServices from "../../services/AuthServices";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import cpfValidate from '../../utils/cpfValidator'
 
 export default function Register(){
-    const [name, setName] = useState<string>()
+/*    const [name, setName] = useState<string>()
     const [cpf, setCPF] = useState<string>()
     const [email, setEmail] = useState<string>()
-    const [senha, setSenha] = useState<string>()
+    const [senha, setSenha] = useState<string>()*/
     const navigate = useNavigate()
+
+    const {register, handleSubmit, formState: {errors}, getValues} = useForm()
 
     
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const registerWallet = async ({ nomeCompleto, cpf, email, senha }: any) => {
          const data = {
-             full_name: name,
+             full_name: nomeCompleto,
              cpf: cpf,
              email: email,
              password: senha
@@ -57,42 +60,90 @@ export default function Register(){
             Registro
           </Typography>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(registerWallet)}>
             <TextField
-              required
               id="outlined-required"
               label="Nome Completo"
               defaultValue=""
               margin="dense" 
               fullWidth
-              onChange={event => {setName(event.target.value)}}
+              {...register("nomeCompleto", {
+                  required: "Campo Obrigatorio!"
+
+              })}
+              error={!!errors?.nomeCompleto}
+              helperText={!!errors?.nomeCompleto ? errors.nomeCompleto.message : null}
             />
             <TextField
-              required
               id="outlined-required"
               label="CPF"
               defaultValue=""
               margin="dense" 
               fullWidth
-              onChange={event => {setCPF(event.target.value)}}
+              {...register("cpf", {
+                required: "Campo Obrigatorio!",
+                validate:(val: string) => {
+                    const checker = cpfValidate(val)
+                    if(!checker) return "CPF Invalido"
+                }
+
+            })}
+            error={!!errors?.cpf}
+            helperText={!!errors?.cpf ? errors.cpf.message : null}
             />
             <TextField
-              required
               id="outlined-required"
               label="Email"
               defaultValue=""
               margin="dense" 
               fullWidth
-              onChange={event => {setEmail(event.target.value)}}
+              {...register("email", {
+                required: "Campo Obrigatorio!",
+                pattern: {
+                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    message:"Email invalido!"
+                }
+
+            })}
+            error={!!errors?.email}
+            helperText={!!errors?.email ? errors.email.message : null}
             />
             <TextField
-              required
               id="outlined-password-input"
               label="Senha"
               type="password"
               margin="dense"
               fullWidth
-              onChange={event => {setSenha(event.target.value)}}
+              {...register("senha", {
+                required: "Campo Obrigatorio!",
+                minLength: {
+                    value: 6,
+                    message: "Senha precisa ter pelomenos 6 caracteres"
+                }
+
+            })}
+            error={!!errors?.senha}
+            helperText={
+                !!errors?.senha ? errors.senha.message : null}
+            />
+
+            <TextField
+              id="outlined-password-input"
+              label="Confirmar senha"
+              type="password"
+              margin="dense"
+              fullWidth
+              {...register("confirmaSenha", {
+                required: "Campo Obrigatorio!",
+                validate:(val: string ) => {
+                    const { senha } = getValues()
+                    return senha === val || "Senhas devem ser iguais!";
+                }
+
+            })}
+            error={!!errors?.confirmaSenha}
+            helperText={
+                !!errors?.confirmaSenha ? errors.confirmaSenha.message : null}
             />
             <Button
               type="submit"

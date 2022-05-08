@@ -1,3 +1,4 @@
+import { Button } from "@mui/material"
 import AuthServices from "../../services/AuthServices"
 
 export default function Application(){
@@ -6,7 +7,7 @@ export default function Application(){
 
     return(
 
-       <h1>Bem vindo ao wallets {authed.name}</h1>
+       <><h1>Bem vindo ao wallets {authed.name}</h1><Button onClick={AuthServices.logout}>Clique aqui para deslogar </Button></>
 
     )
 
