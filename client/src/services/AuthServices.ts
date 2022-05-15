@@ -6,13 +6,13 @@ class AuthService {
   async login(data: object) {
     const response = await axios
           .post(API_URL + "login", data);
-      if (response) {
+      if (response.status === 200) {
         const info = jwt_decode(JSON.stringify(response))
 
           Object.assign(info, {accessToken: response.data})
           localStorage.setItem("user", JSON.stringify(info));
       }
-      return response.data
+      return response
   }
   logout() {
     localStorage.removeItem("user");

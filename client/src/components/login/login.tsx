@@ -15,19 +15,37 @@ import NavBarAlt from "../navbar/navBarAlt";
 import AuthServices from '../../services/AuthServices';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 export default function Login() {
 
-    const [email, setEmail] = useState<string>()
-    const [senha, setSenha] = useState<string>()
+
+ //   const [email, setEmail] = useState<string>()
+   // const [senha, setSenha] = useState<string>()
     const navigate = useNavigate()
 
+    const {register, handleSubmit, formState: {errors}, setError} = useForm()
+    let login = false
+
  
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = {email, password: senha}
-    await AuthServices.login(data)
-    navigate('/home')
+  const tryLogin = async ({email, senha}: any) => {
+      try{
+        console.log(login)
+        login = false
+      const data = {email, password: senha}
+      await AuthServices.login(data)
+        navigate('/home')
+      }catch(err){
+        setError('email', {
+            type:'server',
+            message:'Usuario ou senha invalidos!'
+        })
+
+        setError('senha', {
+            type:'server',
+            message:'Usuario ou senha invalidos!'
+        })
+      }
 
   };
 
@@ -49,28 +67,37 @@ export default function Login() {
           <Typography component="h1" variant="h3">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit(tryLogin)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
-              required
               fullWidth
               id="email"
               label="Email"
-              name="email"
               autoComplete="email"
               autoFocus
-              onChange={event => {setEmail(event.target.value)}}
+              {...register("email", {
+                required: "Campo Obrigatorio!",
+                validate: () =>{
+                    if(login) return "Usuario ou senha inválido!"
+                }
+
+            })}
+            error={!!errors?.email}
+            helperText={!!errors?.email ? errors.email.message : null}
             />
             <TextField
               margin="normal"
-              required
               fullWidth
-              name="password"
               label="Senha"
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={event => {setSenha(event.target.value)}}
+              {...register("senha", {
+                  required: "Campo Obrigatorio!",
+
+              })}
+              error={!!errors?.senha}
+              helperText={!!errors?.senha ? errors.senha.message : null}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

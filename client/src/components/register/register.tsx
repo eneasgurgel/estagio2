@@ -36,7 +36,8 @@ export default function Register(){
              email: email,
              password: senha
          }
-         await AuthServices.register(data)
+          await AuthServices.register(data)
+    
          navigate('/')
          
       };

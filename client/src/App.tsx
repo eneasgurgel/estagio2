@@ -4,13 +4,15 @@ import React from 'react';
 import {
   Routes,
   Route,
-  BrowserRouter
+  BrowserRouter,
+  Navigate
 } from "react-router-dom";
 import './App.css';
 import Application from './components/application/application';
 import Home from './components/home/home';
 import Login from './components/login/login';
 import Register from './components/register/register';
+import checkLogin from './utils/loginChecker';
 
 function App() {
 
@@ -29,7 +31,9 @@ function App() {
           <Route path='/' element={<Home/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
-          <Route path='/home' element={<Application/>}></Route>
+          <Route path='/home' element={<RequireAuth redirectTo="/login">
+            <Application></Application>
+          </RequireAuth>}></Route>
         </Routes>
         </BrowserRouter>
       
@@ -37,6 +41,12 @@ function App() {
 
     </div>
   );
+}
+
+function RequireAuth({children, redirectTo}:any){
+    let isAuth = checkLogin()
+    console.log(isAuth)
+    return isAuth ? children : <Navigate to={redirectTo}/>
 }
 
 export default App;
