@@ -3,6 +3,9 @@ import{ExpandMore as ExpandMoreIcon} from "@mui/icons-material"
 import React from "react";
 import AuthServices from "../../services/AuthServices"
 import NavBarApp from "../navbar/navBarApp"
+import DialogCoins from "../dialogs/dialogsCoins";
+import FormDialogDepositCoins from "../dialogs/dialogFormDepositCoins";
+import FormDialogWithdrawCoins from "../dialogs/dialogFormWithdrawCoins";
 
 export default function Application(){
 
@@ -34,23 +37,10 @@ export default function Application(){
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" fullWidth onClick={handleOpen}>Ver Moedas</Button>
-            <Modal
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-              >
-        <Box sx={style}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Minhas moedas
-          </Typography>
-        </Box>
-      </Modal>
+            <Typography>
+
+            <DialogCoins />
+            </Typography>
             
           </CardActions>
         </React.Fragment>
@@ -67,7 +57,9 @@ export default function Application(){
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" fullWidth color="success">Adicione saldo a suas moedas</Button>
+            <Typography>
+                <FormDialogDepositCoins/>
+            </Typography>
           </CardActions>
         </React.Fragment>
       );
@@ -84,11 +76,11 @@ export default function Application(){
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" fullWidth color="error">Resgate suas moedas</Button>
+            <FormDialogWithdrawCoins/>
           </CardActions>
         </React.Fragment>
       );
-      
+    
 
     return(
        <>
