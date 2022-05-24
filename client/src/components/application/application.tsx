@@ -6,24 +6,40 @@ import NavBarApp from "../navbar/navBarApp"
 import DialogCoins from "../dialogs/dialogsCoins";
 import FormDialogDepositCoins from "../dialogs/dialogFormDepositCoins";
 import FormDialogWithdrawCoins from "../dialogs/dialogFormWithdrawCoins";
+import CoinsService from "../../services/CoinsService";
 
 export default function Application(){
 
     const [open, setOpen] = React.useState(false);
+
+    const [coins, setCoins] = React.useState([])
+
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-      const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-      };
+
+    React.useEffect( () => {
+        async function getData() {
+            try{
+                const res = await CoinsService.getListOfCoins()
+
+                setCoins(res)
+                
+
+            }catch(err: any){
+                console.log(err)
+
+            }
+            
+        }
+
+        getData()
+    }, [])
+
+
+
+
       
 
       const carteirasCard = (
@@ -91,6 +107,18 @@ export default function Application(){
        <CssBaseline/>
        <Container maxWidth="sm" sx={{border: 1,paddingTop: 15, paddingBottom: 15, backgroundColor:'#101010', borderColor:'#404040'}}>
 
+       {coins.map((item: any) => (
+           <Box sx={{border: 1, borderColor:'#404040'}}>
+               <h1>{item.coinName}</h1>
+               <h2>{item.coin} {item.amount}</h2>
+               <p><FormDialogDepositCoins/></p>
+               
+               <p><FormDialogWithdrawCoins/></p>
+               
+
+           </Box>
+       ))}
+
        <Card variant="outlined" sx={{margin: 5}}>{carteirasCard}</Card>
        <Card variant="outlined" sx={{margin: 5}}>{depositCard}</Card>
        <Card variant="outlined" sx={{margin: 5}}>{withdrawCard}</Card>
@@ -98,6 +126,7 @@ export default function Application(){
         
        
        </Container>
+
 
        
        
