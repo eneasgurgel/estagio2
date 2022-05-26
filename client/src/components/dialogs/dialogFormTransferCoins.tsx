@@ -64,7 +64,6 @@ export default function FormDialogTransferCoins() {
           <TextField
           id="outlined-select-currency"
           select
-          label="Entrada"
           value={currency}
           onChange={handleChange}
           helperText="Selecione sua moeda"

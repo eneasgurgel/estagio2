@@ -6,6 +6,25 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import MenuItem from '@mui/material/MenuItem';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import Box from '@mui/material/Box';
+
+const currencies = [
+    {
+      value: 'USD',
+      label: '$ - USD',
+    },
+    {
+      value: 'EUR',
+      label: '€ - EUR',
+    },
+    {
+      value: 'BRL',
+      label: 'R$ - BRL',
+    },
+  ];
+
 
 export default function FormDialogWithdrawCoins() {
   const [open, setOpen] = React.useState(false);
@@ -18,29 +37,43 @@ export default function FormDialogWithdrawCoins() {
     setOpen(false);
   };
 
+  const [currency, setCurrency] = React.useState('BRL');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrency(event.target.value);
+  };
+
   return (
     <div>
         <Button variant="contained" onClick={handleClickOpen} color="error">Resgate suas moedas</Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Resgatar</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Preencha as informações para realizar o resgate!
           </DialogContentText>
           <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+          id="outlined-select-currency"
+          select
+          value={currency}
+          onChange={handleChange}
+          helperText="Selecione sua moeda"
+          margin="normal"
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <CurrencyExchangeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <TextField id="input-with-sx" label={`Valor(${currency})`} variant="standard" />
+      </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose}>Resgatar</Button>
         </DialogActions>
       </Dialog>
     </div>
