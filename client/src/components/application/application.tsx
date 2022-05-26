@@ -7,6 +7,7 @@ import DialogCoins from "../dialogs/dialogsCoins";
 import FormDialogDepositCoins from "../dialogs/dialogFormDepositCoins";
 import FormDialogWithdrawCoins from "../dialogs/dialogFormWithdrawCoins";
 import CoinsService from "../../services/CoinsService";
+import FormDialogTransferCoins from "../dialogs/dialogFormTransferCoins";
 
 export default function Application(){
 
@@ -103,15 +104,14 @@ export default function Application(){
        <NavBarApp/>
 
 
-
        <CssBaseline/>
        <Container maxWidth="sm" sx={{border: 1,paddingTop: 15, paddingBottom: 15, backgroundColor:'#101010', borderColor:'#404040'}}>
-
+       <p><FormDialogDepositCoins/></p>
        {coins.map((item: any) => (
            <Box sx={{border: 1, borderColor:'#404040'}}>
                <h1>{item.coinName}</h1>
                <h2>{item.coin} {item.amount}</h2>
-               <p><FormDialogDepositCoins/></p>
+               <p><FormDialogTransferCoins/></p>
                
                <p><FormDialogWithdrawCoins/></p>
                

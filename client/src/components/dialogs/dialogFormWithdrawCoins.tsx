@@ -20,7 +20,7 @@ export default function FormDialogWithdrawCoins() {
 
   return (
     <div>
-        <Button variant="contained" fullWidth onClick={handleClickOpen} color="error">Resgate suas moedas</Button>
+        <Button variant="contained" onClick={handleClickOpen} color="error">Resgate suas moedas</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>

@@ -7,29 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
-const currenciesIn = [
-    {
-      value: 'USD',
-      label: '$ - USD',
-    },
-    {
-      value: 'EUR',
-      label: '€ - EUR',
-    },
-    {
-      value: 'BTC',
-      label: '฿ - BTC',
-    },
-    {
-      value: 'BRL',
-      label: 'R$ - BRL',
-    },
-  ];
-
-  const currenciesOut = [
+const currencies = [
     {
       value: 'USD',
       label: '$ - USD',
@@ -44,7 +26,7 @@ const currenciesIn = [
     },
   ];
 
-export default function FormDialogDepositCoins() {
+export default function FormDialogTransferCoins() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -55,63 +37,53 @@ export default function FormDialogDepositCoins() {
     setOpen(false);
   };
 
-  const [currencyIn, setCurrencyIn] = React.useState('BRL');
-  const [currencyOut, setCurrencyOut] = React.useState('USD');
+  const [currency, setCurrency] = React.useState('BRL');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrencyIn(event.target.value);
-  };
-  const handleChangeOut = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrencyOut(event.target.value);
+    setCurrency(event.target.value);
   };
 
   return (
     <div>
-        <Button variant="contained" onClick={handleClickOpen} color="success">Adicione saldo a suas moedas</Button>
+        <Button variant="contained" onClick={handleClickOpen}>Trânsfira moedas</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Depositar</DialogTitle>
+        <DialogTitle>Transferênica</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Preencha as informações para realizar o depósito!
+            Preencha com o ID da Wallet destino!
+          </DialogContentText>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <AccountBalanceWalletIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+            <TextField id="input-with-sx" label='ID'variant="standard" />
+        </Box>
+        </DialogContent>
+        <DialogContent>
+          <DialogContentText>
+            Preencha com a moeda e o valor da transferência! 
           </DialogContentText>
           <TextField
           id="outlined-select-currency"
           select
           label="Entrada"
-          value={currencyIn}
+          value={currency}
           onChange={handleChange}
           helperText="Selecione sua moeda"
           margin="normal"
         >
-          {currenciesIn.map((option) => (
+          {currencies.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
-        <TextField
-          id="outlined-select-currency"
-          select
-          label="Depósito"
-          value={currencyOut}
-          onChange={handleChangeOut}
-          helperText="Selecione sua moeda"
-          margin="normal"
-        >
-          {currenciesOut.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
         <CurrencyExchangeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-        <TextField id="input-with-sx" label={`Valor(${currencyIn})`} variant="standard" />
+        <TextField id="input-with-sx" label={`Valor(${currency})`} variant="standard"  helperText="Selecione o valor" />
       </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleClose}>Depósitar</Button>
+          <Button onClick={handleClose}>Transferir</Button>
         </DialogActions>
       </Dialog>
     </div>
