@@ -26,7 +26,7 @@ const currencies = [
   ];
 
 
-export default function FormDialogWithdrawCoins() {
+export default function FormDialogWithdrawCoins(props: any) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -34,6 +34,7 @@ export default function FormDialogWithdrawCoins() {
   };
 
   const handleClose = () => {
+      console.log(props.coin)
     setOpen(false);
   };
 
