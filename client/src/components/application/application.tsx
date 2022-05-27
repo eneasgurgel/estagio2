@@ -1,4 +1,4 @@
-import {Box, Button, Container, CssBaseline,Card, CardActions, CardContent, Typography, Modal} from "@mui/material"
+import {Box, Button, Container, CssBaseline,Card, CardActions, CardContent, Typography, Grid} from "@mui/material"
 import{ExpandMore as ExpandMoreIcon} from "@mui/icons-material"
 import React from "react";
 import AuthServices from "../../services/AuthServices"
@@ -39,66 +39,6 @@ export default function Application(){
     }, [])
 
 
-
-
-      
-
-      const carteirasCard = (
-        <React.Fragment>
-          <CardContent>
-            <Typography variant="h4" component="div">
-              Minha carteira
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Ver o saldo atual das moedas de sua carteira
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Typography>
-
-            <DialogCoins />
-            </Typography>
-            
-          </CardActions>
-        </React.Fragment>
-      );
-
-      const depositCard = (
-        <React.Fragment>
-          <CardContent>
-            <Typography variant="h4" component="div">
-              Depositar moedas
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Adicione moedas em sua carteira
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Typography>
-                <FormDialogDepositCoins/>
-            </Typography>
-          </CardActions>
-        </React.Fragment>
-      );
-
-
-      const withdrawCard = (
-        <React.Fragment>
-          <CardContent>
-            <Typography variant="h4" component="div">
-              Saque suas moedas
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Resgate o saldo de suas moedas
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <FormDialogWithdrawCoins/>
-          </CardActions>
-        </React.Fragment>
-      );
-    
-
     return(
        <>
        <NavBarApp/>
@@ -107,22 +47,16 @@ export default function Application(){
        <CssBaseline/>
        <Container maxWidth="sm" sx={{border: 1,paddingTop: 15, paddingBottom: 15, backgroundColor:'#101010', borderColor:'#404040'}}>
        <p><FormDialogDepositCoins/></p>
-       {coins.map((item: any) => (
-           <Box sx={{border: 1, borderColor:'#404040'}}>
+       { coins.length === 0?<h4>Parece que você não fez nenhum depósito ainda, que tal realizar o seu primeiro? =)</h4> :
+       coins.map((item: any) => (
+           <Grid sx={{ flexGrow: 1, border: 1, borderColor:'#404040', margin: 3, padding: 1, borderRadius: 1 }}>
                <h1>{item.coinName}</h1>
                <h2>{item.coin} {item.amount}</h2>
-               <p><FormDialogTransferCoins/></p>
-               
-               <p><FormDialogWithdrawCoins/></p>
+               <p><FormDialogWithdrawCoins coin={item.coin}/></p>
                
 
-           </Box>
+           </Grid>
        ))}
-
-       <Card variant="outlined" sx={{margin: 5}}>{carteirasCard}</Card>
-       <Card variant="outlined" sx={{margin: 5}}>{depositCard}</Card>
-       <Card variant="outlined" sx={{margin: 5}}>{withdrawCard}</Card>
-
         
        
        </Container>

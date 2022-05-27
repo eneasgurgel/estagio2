@@ -9,6 +9,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import { useForm } from 'react-hook-form';
+import CoinsService from '../../services/CoinsService';
+import { Alert } from '@mui/material';
+import SuccessAlert from '../alerts/sucessAlert';
 
 const currenciesIn = [
     {
@@ -46,6 +50,7 @@ const currenciesIn = [
 
 export default function FormDialogDepositCoins() {
   const [open, setOpen] = React.useState(false);
+  const { register, handleSubmit } = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -58,18 +63,28 @@ export default function FormDialogDepositCoins() {
   const [currencyIn, setCurrencyIn] = React.useState('BRL');
   const [currencyOut, setCurrencyOut] = React.useState('USD');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrencyIn(event.target.value);
-  };
-  const handleChangeOut = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrencyOut(event.target.value);
-  };
+
+  const addNewCoin = async ({entrada, deposito, amount}: any) =>{
+      const data = {
+          coin: deposito,
+          convertFrom: entrada,
+          amount: amount,
+          type: "deposit"
+      }
+      const teste = await CoinsService.addCoin(data)
+      window.location.reload()
+
+    handleClose()
+
+    return alert('Deposito efetuado com sucesso')
+  }
 
   return (
     <div>
         <Button variant="contained" onClick={handleClickOpen} color="success">Adicione saldo a suas moedas</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Depositar</DialogTitle>
+        <form onSubmit={handleSubmit(addNewCoin)}>
         <DialogContent>
           <DialogContentText>
             Preencha as informações para realizar o depósito!
@@ -79,9 +94,11 @@ export default function FormDialogDepositCoins() {
           select
           label="Entrada"
           value={currencyIn}
-          onChange={handleChange}
           helperText="Selecione sua moeda"
           margin="normal"
+          {...register("entrada", {
+              onChange: v => setCurrencyIn(v.target.value)
+          })}
         >
           {currenciesIn.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -94,9 +111,11 @@ export default function FormDialogDepositCoins() {
           select
           label="Depósito"
           value={currencyOut}
-          onChange={handleChangeOut}
           helperText="Selecione sua moeda"
           margin="normal"
+          {...register("deposito", {
+            onChange: v => setCurrencyOut(v.target.value)
+          })}
         >
           {currenciesOut.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -106,13 +125,16 @@ export default function FormDialogDepositCoins() {
         </TextField>
       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
         <CurrencyExchangeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-        <TextField id="input-with-sx" label={`Valor(${currencyIn})`} variant="standard" />
+        <TextField id="input-with-sx" label={`Valor(${currencyIn})`} variant="standard" type="number" {...register("amount", {
+            min: 1
+        })} />
       </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={handleClose}>Depósitar</Button>
+          <Button type='submit'>Depósitar</Button>
         </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

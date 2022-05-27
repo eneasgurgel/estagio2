@@ -18,6 +18,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import card from '../../images/logoprincipal.png'
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Home(){
@@ -31,9 +32,12 @@ export default function Home(){
             bgcolor: 'background.paper',
             pt: 8,
             pb: 6,
+            marginTop: 5
           }}
         >
           <Container maxWidth="sm">
+
+              <img src={card}></img>
             <Typography
               component="h1"
               variant="h2"
@@ -41,7 +45,7 @@ export default function Home(){
               color="text.primary"
               gutterBottom
             >
-              Bem vindo ao Wallets
+              Bem vindo ao myWallet
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Sua nova solução em conversão de moedas, depósitos, saques e transferências de fundos.
@@ -73,7 +77,6 @@ export default function Home(){
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
         </Typography>
         <Typography
           variant="subtitle1"
@@ -81,7 +84,6 @@ export default function Home(){
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
         </Typography>
       </Box>
       {/* End footer */}

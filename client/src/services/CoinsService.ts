@@ -10,8 +10,9 @@ class UserService {
    const { data } = await axios.get(API_URL + user.id);
    return data
   }
-  getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+  async addCoin(data: object) {
+    const user = await AuthServices.getCurrentUser()
+    return axios.post(`${API_URL}new/${user.id}`, data)
   }
 }
 export default new UserService();
