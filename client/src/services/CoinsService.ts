@@ -10,9 +10,11 @@ class UserService {
    const { data } = await axios.get(API_URL + user.id);
    return data
   }
-  async addCoin(data: object) {
+  async addCoin(payload: object) {
     const user = await AuthServices.getCurrentUser()
-    return axios.post(`${API_URL}new/${user.id}`, data)
+    const { data } = await axios.post(`${API_URL}new/${user.id}`, payload).catch((err) => { throw new Error(err.response.data)})
+
+    return data
   }
 
   async getTransactions(coinId: string) {

@@ -1,3 +1,4 @@
+import BadRequest from '../error/BadRequest';
 import NotFound from '../error/NotFound';
 import coinsRepository from '../repository/coins.repository';
 import walletsRepository from '../repository/wallets.repository';
@@ -5,6 +6,10 @@ import coinsServices from './coins.services';
 
 class WalletsServices {
     async create(data: any) {
+        const checkEmail = await walletsRepository.findOneEmail(data.email);
+        if (checkEmail) throw new BadRequest('Email ja esta em uso!');
+        const checkCPF = await walletsRepository.findOneCPF(data.cpf);
+        if (checkCPF) throw new BadRequest('CPF ja esta cadastrado!');
         const newWallet = await walletsRepository.create(data);
         if (!newWallet) throw new Error();
         return newWallet;

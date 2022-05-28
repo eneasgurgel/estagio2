@@ -30,7 +30,7 @@ const currencies = [
 
 export default function FormDialogTransferCoins() {
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors}, setError } = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,26 +43,35 @@ export default function FormDialogTransferCoins() {
   const [currency, setCurrency] = React.useState('BRL');
 
   const tranferCoin = async ({moeda, amount, address}: any) =>{
-    const data = {
-        coin: moeda,
-        convertFrom: moeda,
-        amount: Number(amount),
-        receiverAddress: address,
-        type: "transfer"
+    try{
+        const data = {
+            coin: moeda,
+            convertFrom: moeda,
+            amount: Number(amount),
+            receiverAddress: address,
+            type: "transfer"
+        }
+        await CoinsService.addCoin(data)
+        window.location.reload()
+    
+      handleClose()
+    
+      return alert('Deposito efetuado com sucesso')
+
+    }catch(err: any){
+        setError('address', {
+            type:'server',
+            message:err.message
+        })
     }
-    await CoinsService.addCoin(data)
-    window.location.reload()
-
-  handleClose()
-
-  return alert('Deposito efetuado com sucesso')
+    
 }
 
   return (
     <div>
         <Button fullWidth variant="contained" onClick={handleClickOpen}>Trânsfira moedas</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Transferênica</DialogTitle>
+        <DialogTitle>Transferência</DialogTitle>
         <form onSubmit={handleSubmit(tranferCoin)}>
             <DialogContent>
             <DialogContentText>
@@ -70,7 +79,11 @@ export default function FormDialogTransferCoins() {
             </DialogContentText>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <AccountBalanceWalletIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                <TextField id="input-with-sx" label='ID'variant="standard" {...register("address")}/>
+                <TextField id="input-with-sx"
+                 label='ID'variant="standard" 
+                 error={!!errors?.address}
+                 helperText={!!errors?.address ? errors.address.message : null}
+                 {...register("address")}/>
             </Box>
             </DialogContent>
             <DialogContent>
@@ -81,8 +94,9 @@ export default function FormDialogTransferCoins() {
             id="outlined-select-currency"
             select
             value={currency}
-            helperText="Selecione sua moeda"
+            helperText={!!errors?.address ? errors.address.message :"Selecione sua moeda"}
             margin="normal"
+            error={!!errors?.address}
             {...register("moeda", {
                 onChange: v => setCurrency(v.target.value)
             })}
@@ -95,7 +109,12 @@ export default function FormDialogTransferCoins() {
             </TextField>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
             <CurrencyExchangeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-            <TextField id="input-with-sx" label={`Valor(${currency})`} variant="standard"  helperText="Selecione o valor" type="number" {...register("amount", {
+            <TextField id="input-with-sx"
+             label={`Valor(${currency})`}
+              variant="standard"
+              helperText={!!errors?.address ? errors.address.message :"Selecione o valor"}
+              error={!!errors?.address}
+              type="number" {...register("amount", {
             min: 1
         })} />
             </Box>

@@ -9,6 +9,10 @@ class NewsRepository extends Repository {
     async findOneEmail(email: any) {
         return WalletsSchema.findOne({ email });
     }
+
+    async findOneCPF(cpf: any) {
+        return WalletsSchema.findOne({ cpf });
+    }
 }
 
 export default new NewsRepository();
