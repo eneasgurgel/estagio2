@@ -50,7 +50,7 @@ class CoinsService {
 
             value = data.amount - body.amount * Number(tdata.bid);
 
-            if (body.amount * Number(tdata.bid) > value) {
+            if (value < 0) {
                 throw new BadRequest('Nao se pode sacar um valor maior que o saldo!');
             }
 
@@ -81,7 +81,7 @@ class CoinsService {
             }
 
             value = body.amount * Number(tdata.bid);
-            if (body.amount * Number(tdata.bid) > value) {
+            if (data.amount < value) {
                 throw new BadRequest('Nao se pode transferir um valor maior que o saldo!');
             }
 
