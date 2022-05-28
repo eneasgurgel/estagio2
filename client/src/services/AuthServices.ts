@@ -11,6 +11,7 @@ class AuthService {
       if (response.status === 200) {
         const info = jwt_decode(JSON.stringify(response))
 
+        //@ts-ignore 
           Object.assign(info, {accessToken: response.data})
           localStorage.setItem("user", JSON.stringify(info));
       }
