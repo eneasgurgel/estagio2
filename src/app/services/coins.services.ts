@@ -47,11 +47,12 @@ class CoinsService {
             if (body.amount <= 0) {
                 throw new BadRequest('Nao se pode sacar valores negativos');
             }
+
+            value = data.amount - body.amount * Number(tdata.bid);
+
             if (body.amount * Number(tdata.bid) > value) {
                 throw new BadRequest('Nao se pode sacar um valor maior que o saldo!');
             }
-
-            value = data.amount - body.amount * Number(tdata.bid);
 
             await transactionsRepository.create({
                 coinName: data.coinName,
