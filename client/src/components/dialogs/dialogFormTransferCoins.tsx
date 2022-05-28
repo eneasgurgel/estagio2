@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import { useForm } from 'react-hook-form';
 
 const currencies = [
     {
@@ -28,6 +29,7 @@ const currencies = [
 
 export default function FormDialogTransferCoins() {
   const [open, setOpen] = React.useState(false);
+  const { register, handleSubmit } = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);

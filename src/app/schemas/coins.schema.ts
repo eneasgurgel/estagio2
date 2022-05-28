@@ -16,6 +16,11 @@ const coinsSchema = new mongoose.Schema({
     address: {
         type: mongoose.Schema.Types.ObjectId,
         refPath: 'Wallets'
+    },
+
+    receiverAddress: {
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'Wallets'
     }
 });
 

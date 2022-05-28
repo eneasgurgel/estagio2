@@ -18,3 +18,7 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
     res.sendFile('index.html', { root: path.join(__dirname, '../client/build/') });
 });
+
+app.get('/home', (req, res) => {
+    res.sendFile('index.html', { root: path.join(__dirname, '../client/build/') });
+});

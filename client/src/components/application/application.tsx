@@ -51,7 +51,7 @@ export default function Application(){
        coins.map((item: any) => (
            <Grid sx={{ flexGrow: 1, border: 1, borderColor:'#404040', margin: 3, padding: 1, borderRadius: 1 }}>
                <h1>{item.coinName}</h1>
-               <h2>{item.coin} {item.amount}</h2>
+               <h2>{item.coin} {item.amount.toFixed(2)}</h2>
                <p><FormDialogWithdrawCoins coin={item.coin}/></p>
                
 
