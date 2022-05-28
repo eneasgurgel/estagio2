@@ -22,6 +22,16 @@ class CoinsController {
                 res.status(status).json(err.message);
             });
     }
+
+    async getTransationsCoins(req: Request, res: Response) {
+        await coinsServices
+            .getTransactionsCoin(req.params.coinId)
+            .then((data) => res.status(200).json(data))
+            .catch((err) => {
+                const status = err.status || 500;
+                res.status(status).json(err.message);
+            });
+    }
 }
 
 export default new CoinsController();

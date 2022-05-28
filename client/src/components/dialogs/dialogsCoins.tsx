@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function DialogCoins() {
+export default function DialogCoins(props: any) {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
 
@@ -31,7 +31,7 @@ export default function DialogCoins() {
 
   return (
     <div>
-        <Button variant="contained" fullWidth onClick={handleClickOpen('paper')}>Ver Moedas</Button>
+        <Button variant="contained" fullWidth onClick={handleClickOpen('paper')}>Ver ultimas transações</Button>
       <Dialog
         open={open}
         onClose={handleClose}

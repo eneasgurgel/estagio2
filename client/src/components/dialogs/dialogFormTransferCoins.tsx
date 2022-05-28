@@ -12,9 +12,6 @@ import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { useForm } from 'react-hook-form';
 import CoinsService from '../../services/CoinsService';
-import { Alert } from '@mui/material';
-import SuccessAlert from '../alerts/sucessAlert';
-import { PropaneSharp } from '@mui/icons-material';
 
 const currencies = [
     {
@@ -45,10 +42,6 @@ export default function FormDialogTransferCoins() {
 
   const [currency, setCurrency] = React.useState('BRL');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
-  };
-
   const tranferCoin = async ({moeda, amount, address}: any) =>{
     const data = {
         coin: moeda,
@@ -57,7 +50,7 @@ export default function FormDialogTransferCoins() {
         id: address,
         type: "transfer"
     }
-    const teste = await CoinsService.addCoin(data)
+    await CoinsService.addCoin(data)
     window.location.reload()
 
   handleClose()

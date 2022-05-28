@@ -43,9 +43,6 @@ export default function FormDialogWithdrawCoins(props: any) {
 
   const [currency, setCurrency] = React.useState('BRL');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrency(event.target.value);
-  };
 
   const withdrawCoins = async ({moeda, amount}: any) =>{
     const data = {
@@ -54,7 +51,7 @@ export default function FormDialogWithdrawCoins(props: any) {
         amount: Number(amount),
         type: "withdraw"
     }
-    const teste = await CoinsService.addCoin(data)
+    await CoinsService.addCoin(data)
     window.location.reload()
 
   handleClose()

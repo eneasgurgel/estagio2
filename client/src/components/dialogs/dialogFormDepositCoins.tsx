@@ -11,8 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { useForm } from 'react-hook-form';
 import CoinsService from '../../services/CoinsService';
-import { Alert } from '@mui/material';
-import SuccessAlert from '../alerts/sucessAlert';
 
 const currenciesIn = [
     {
@@ -71,7 +69,7 @@ export default function FormDialogDepositCoins() {
           amount: amount,
           type: "deposit"
       }
-      const teste = await CoinsService.addCoin(data)
+      await CoinsService.addCoin(data)
       window.location.reload()
 
     handleClose()

@@ -138,6 +138,15 @@ class CoinsService {
 
         return getData;
     }
+
+    async getTransactionsCoin(id: string) {
+        const transactions = await transactionsRepository.findByCoin(id);
+        if (transactions.length === 0) {
+            throw new NotFound('transações nao encontradas para esta moeda');
+        }
+
+        return transactions;
+    }
 }
 
 export default new CoinsService();

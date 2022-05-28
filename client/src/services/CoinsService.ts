@@ -14,5 +14,11 @@ class UserService {
     const user = await AuthServices.getCurrentUser()
     return axios.post(`${API_URL}new/${user.id}`, data)
   }
+
+  async getTransactions(coinId: string) {
+    return axios.get(`${API_URL}${coinId}/transactions`)
+  }
+
+
 }
 export default new UserService();
