@@ -30,7 +30,7 @@ const currencies = [
 
 export default function FormDialogWithdrawCoins(props: any) {
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors} } = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,8 +55,6 @@ export default function FormDialogWithdrawCoins(props: any) {
     window.location.reload()
 
   handleClose()
-
-  return alert('Deposito efetuado com sucesso')
 }
 
 
@@ -88,8 +86,18 @@ export default function FormDialogWithdrawCoins(props: any) {
             </TextField>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
             <CurrencyExchangeIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-            <TextField id="input-with-sx" label={`Valor(${currency})`} variant="standard" type="number" {...register("amount", {
-            min: 1
+            <TextField
+         id="input-with-sx"
+         label={`Valor(${currency})`} 
+         variant="standard" 
+         type="number" 
+         error={!!errors?.amount}
+         helperText={!!errors?.amount ? errors.amount.message : null}
+         {...register("amount", {
+            min:{
+                value: 1,
+                message: "O valor de deposito deve ser de no minimo 1"
+            }
         })} />
         </Box>
         </DialogContent>

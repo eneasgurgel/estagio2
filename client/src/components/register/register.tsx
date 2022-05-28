@@ -25,20 +25,38 @@ export default function Register(){
     const [senha, setSenha] = useState<string>()*/
     const navigate = useNavigate()
 
-    const {register, handleSubmit, formState: {errors}, getValues} = useForm()
+    const {register, handleSubmit, formState: {errors}, getValues, setError} = useForm()
 
     
 
     const registerWallet = async ({ nomeCompleto, cpf, email, senha }: any) => {
-         const data = {
-             full_name: nomeCompleto,
-             cpf: cpf,
-             email: email,
-             password: senha
-         }
-          await AuthServices.register(data)
-    
-         navigate('/')
+        try{
+            const data = {
+                full_name: nomeCompleto,
+                cpf: cpf,
+                email: email,
+                password: senha
+            }
+             await AuthServices.register(data)
+       
+            navigate('/')
+
+        }catch(err: any){
+            if(err.response.data.error === "Email ja esta em uso!"){
+                setError('email', {
+                    type:'server',
+                    message:err.response.data.error
+                })
+            }
+
+            if(err.response.data.error === "CPF ja esta cadastrado!"){
+                setError('cpf', {
+                    type:'server',
+                    message:err.response.data.error
+                })
+            }
+        }
+
          
       };
 

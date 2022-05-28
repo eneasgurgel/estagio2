@@ -59,9 +59,12 @@ export default function FormDialogTransferCoins() {
       return alert('Deposito efetuado com sucesso')
 
     }catch(err: any){
+        const a = "Cast to ObjectId failed for value \"629234c561d5baf863d31eb\" (type string) at path \"_id\" for model \"Wallets\""
+
+
         setError('address', {
             type:'server',
-            message:err.message
+            message:err.message === a? "formato de endereço de carteira invalido"! : err.message
         })
     }
     
@@ -94,9 +97,9 @@ export default function FormDialogTransferCoins() {
             id="outlined-select-currency"
             select
             value={currency}
-            helperText={!!errors?.address ? errors.address.message :"Selecione sua moeda"}
+            helperText={!!errors?.moeda ? errors.moeda.message :"Selecione sua moeda"}
             margin="normal"
-            error={!!errors?.address}
+            error={!!errors?.moeda}
             {...register("moeda", {
                 onChange: v => setCurrency(v.target.value)
             })}
@@ -112,10 +115,13 @@ export default function FormDialogTransferCoins() {
             <TextField id="input-with-sx"
              label={`Valor(${currency})`}
               variant="standard"
-              helperText={!!errors?.address ? errors.address.message :"Selecione o valor"}
-              error={!!errors?.address}
+              helperText={!!errors?.amount ? errors.amount.message :"Selecione o valor"}
+              error={!!errors?.amount}
               type="number" {...register("amount", {
-            min: 1
+                min:{
+                    value: 1,
+                    message: "O valor de deposito deve ser de no minimo 1"
+                }
         })} />
             </Box>
             </DialogContent>
