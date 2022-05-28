@@ -46,8 +46,8 @@ export default function FormDialogTransferCoins() {
     const data = {
         coin: moeda,
         convertFrom: moeda,
-        amount: amount,
-        id: address,
+        amount: Number(amount),
+        receiverAddress: address,
         type: "transfer"
     }
     await CoinsService.addCoin(data)

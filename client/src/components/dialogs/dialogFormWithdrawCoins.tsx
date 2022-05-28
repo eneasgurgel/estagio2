@@ -46,8 +46,8 @@ export default function FormDialogWithdrawCoins(props: any) {
 
   const withdrawCoins = async ({moeda, amount}: any) =>{
     const data = {
-        coin: moeda,
-        convertFrom: props.coin,
+        coin: props.coin,
+        convertFrom: moeda,
         amount: Number(amount),
         type: "withdraw"
     }

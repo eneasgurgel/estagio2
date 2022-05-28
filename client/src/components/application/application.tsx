@@ -3,11 +3,12 @@ import{ExpandMore as ExpandMoreIcon} from "@mui/icons-material"
 import React from "react";
 import AuthServices from "../../services/AuthServices"
 import NavBarApp from "../navbar/navBarApp"
-import DialogCoins from "../dialogs/dialogsCoins";
+import DialogCoins from "../dialogs/dialogTransfers";
 import FormDialogDepositCoins from "../dialogs/dialogFormDepositCoins";
 import FormDialogWithdrawCoins from "../dialogs/dialogFormWithdrawCoins";
 import CoinsService from "../../services/CoinsService";
 import FormDialogTransferCoins from "../dialogs/dialogFormTransferCoins";
+import DialogTransfers from "../dialogs/dialogTransfers";
 
 export default function Application(){
 
@@ -54,6 +55,7 @@ export default function Application(){
                <h2>{item.coin} {item.amount.toFixed(2)}</h2>
                <p><FormDialogWithdrawCoins coin={item.coin}/></p>
                <p><FormDialogTransferCoins/></p>
+               <p><DialogTransfers coinId={item._id}/></p>
                
 
            </Grid>

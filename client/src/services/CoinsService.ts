@@ -16,7 +16,8 @@ class UserService {
   }
 
   async getTransactions(coinId: string) {
-    return axios.get(`${API_URL}${coinId}/transactions`)
+    const { data } = await axios.get(`${API_URL}${coinId}/transactions`).catch((err) => { throw new Error(err)})
+    return data
   }
 
 

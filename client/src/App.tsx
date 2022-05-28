@@ -1,5 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import moment from 'moment';
 import React from 'react';
 import {
   Routes,
@@ -14,6 +15,8 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import checkLogin from './utils/loginChecker';
 
+
+
 function App() {
 
   const darkTheme = createTheme({
@@ -21,6 +24,8 @@ function App() {
       mode: 'dark',
     },
   });
+
+  moment.locale('PT-BR')
   return (
     <div className='App'>
         <ThemeProvider theme={darkTheme}>
