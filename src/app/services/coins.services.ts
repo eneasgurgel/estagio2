@@ -2,6 +2,7 @@ import BadRequest from '../error/BadRequest';
 import NotFound from '../error/NotFound';
 import ICoinData from '../interfaces/coinDataInterface';
 import coinsRepository from '../repository/coins.repository';
+import transactionsRepository from '../repository/transactions.repository';
 import walletsRepository from '../repository/wallets.repository';
 
 class CoinsService {
@@ -32,6 +33,14 @@ class CoinsService {
             value = data.amount + body.amount * Number(tdata.bid);
 
             value = Number(Number.parseFloat(value.toString()).toFixed(2));
+
+            await transactionsRepository.create({
+                coinName: data.coinName,
+                amount: (body.amount * Number(tdata.bid)).toFixed(2),
+                type: 'Deposito',
+                coinId: data.id,
+                address: data.address
+            });
         }
 
         if (body.type === 'withdraw') {
@@ -44,6 +53,14 @@ class CoinsService {
             if (body.amount > value) {
                 throw new BadRequest('Nao se pode sacar um valor maior que o saldo!');
             }
+
+            await transactionsRepository.create({
+                coinName: data.coinName,
+                amount: -(body.amount.toFixed(2) * Number(tdata.bid)).toFixed(2),
+                type: 'Saque',
+                coinId: data.id,
+                address: data.address
+            });
 
             value = Number(Number.parseFloat(value.toString()).toFixed(2));
         }
@@ -69,6 +86,25 @@ class CoinsService {
             }
 
             value = Number(Number.parseFloat(value.toString()).toFixed(2));
+
+            await transactionsRepository.create({
+                coinName: data.coinName,
+                amount: -(body.amount.toFixed(2) * Number(tdata.bid)).toFixed(2),
+                type: 'Transferencia Enviada',
+                coinId: data.id,
+                address: data.address,
+                receiverAddress: findCoin.address
+            });
+
+            await transactionsRepository.create({
+                coinName: data.coinName,
+                amount: (body.amount.toFixed(2) * Number(tdata.bid)).toFixed(2),
+                type: 'Transferencia Recebida',
+                coinId: findCoin.id,
+                address: findCoin.address,
+                transmiterAddress: data.address
+            });
+
             await coinsRepository.updateFunds(findCoin.id, findCoin.amount + value);
             return coinsRepository.updateFunds(data.id, data.amount - value);
         }
