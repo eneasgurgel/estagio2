@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './authHeader';
 import AuthServices from './AuthServices';
-const API_URL = process.env.URL || "http://wallets2.herokuapp.com/api/v1/coins/";
+const API_URL = process.env.URL || "https://wallets2.herokuapp.com/api/v1/coins/";
 class UserService {
  async getListOfCoins() {
     const user = await AuthServices.getCurrentUser()
