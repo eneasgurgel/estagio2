@@ -53,6 +53,7 @@ export default function Application(){
                <h1>{item.coinName}</h1>
                <h2>{item.coin} {item.amount.toFixed(2)}</h2>
                <p><FormDialogWithdrawCoins coin={item.coin}/></p>
+               <p><FormDialogTransferCoins/></p>
                
 
            </Grid>
