@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
 
-const API_URL = process.env.URL || "http://wallets2.herokuapp.com/api/v1/wallets/";
+const API_URL = process.env.URL || "https://wallets2.herokuapp.com/api/v1/wallets/";
 
 
 class AuthService {
