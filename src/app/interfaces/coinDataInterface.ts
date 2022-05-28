@@ -1,7 +1,7 @@
 export default interface ICoinData {
     code: string;
     codein: string;
-    name: string;
+    name: any;
     high: string;
     low: string;
     varBid: string;

@@ -9,7 +9,7 @@ class CoinsService {
     async createNewCoin(data: ICoinData, address: string) {
         const newWallet = await coinsRepository.create({
             coin: data.codein,
-            coinName: data.name.split('/')[1] ? data.name.split('/') : data.name,
+            coinName: data.name.split[1] ? data.name.split('/')[1] : data.name,
             amount: 0,
             address
         });
