@@ -108,7 +108,8 @@ export default function FormDialogWithdrawCoins(props: any) {
             min:{
                 value: 1,
                 message: "O valor de depósito deve ser de no minimo 1"
-            }
+            },
+            required:'Campo obrigatorio!'
         })} />
         </Box>
         </DialogContent>

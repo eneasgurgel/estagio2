@@ -48,7 +48,7 @@ const currenciesIn = [
 
 export default function FormDialogDepositCoins() {
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const { register, handleSubmit, formState: {errors}, setError } = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -63,6 +63,7 @@ export default function FormDialogDepositCoins() {
 
 
   const addNewCoin = async ({entrada, deposito, amount}: any) =>{
+      try{
       const data = {
           coin: deposito,
           convertFrom: entrada,
@@ -75,6 +76,13 @@ export default function FormDialogDepositCoins() {
     handleClose()
 
     return alert('Depósito efetuado com sucesso')
+      }catch(err: any){
+        setError('amount', {
+            type:'server',
+            message: err.message
+        })
+
+      }
   }
 
   return (
@@ -134,7 +142,8 @@ export default function FormDialogDepositCoins() {
             min:{
                 value: 1,
                 message: "O valor de depósito deve ser de no minimo 1"
-            }
+            },
+            required:'Campo obrigatorio!'
         })} />
         
       </Box>

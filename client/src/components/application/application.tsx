@@ -30,7 +30,7 @@ export default function Application(){
                 
 
             }catch(err: any){
-                alert('erro ao carregar as moedas, tente mais tarde!')
+                console.log('não há moedas')
 
             }
             

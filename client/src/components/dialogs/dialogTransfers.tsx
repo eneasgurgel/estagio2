@@ -47,7 +47,7 @@ export default function DialogTransfers(props: any) {
             
 
         }catch(err: any){
-            alert(err.message)
+            console.log(err.message)
 
         }
         

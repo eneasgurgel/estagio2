@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { useForm } from 'react-hook-form';
 import CoinsService from '../../services/CoinsService';
+import AuthServices from '../../services/AuthServices';
 
 const currencies = [
     {
@@ -59,12 +60,12 @@ export default function FormDialogTransferCoins(props: any) {
       return alert('Transferência efetuada com sucesso')
 
     }catch(err: any){
-        const a = "Cast to ObjectId failed for value \"629234c561d5baf863d31eb\" (type string) at path \"_id\" for model \"Wallets\""
+        const a = "Cast to ObjectId failed for value"
 
 
         setError('address', {
             type:'server',
-            message:err.message === a? "formato de endereço de carteira invalido"! : err.message
+            message:err.message.includes(a)? "formato de endereço de carteira invalido"! : err.message
         })
     }
     
@@ -86,7 +87,13 @@ export default function FormDialogTransferCoins(props: any) {
                  label='ID'variant="standard" 
                  error={!!errors?.address}
                  helperText={!!errors?.address ? errors.address.message : null}
-                 {...register("address")}/>
+                 {...register("address", {
+                     required: 'Campo obrigatorio',
+                     validate:(val: string ) => {
+                        const user = AuthServices.getCurrentUser()
+                        return user.id !== val || "Não se pode transferir para sua propria conta!";
+                    }
+                     })}/>
             </Box>
             </DialogContent>
             <DialogContent>
@@ -121,7 +128,8 @@ export default function FormDialogTransferCoins(props: any) {
                 min:{
                     value: 1,
                     message: "O valor de depósito deve ser de no minimo 1"
-                }
+                },
+                required:'Campo obrigatorio!'
         })} />
             </Box>
             </DialogContent>
