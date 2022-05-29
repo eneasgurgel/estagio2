@@ -21,7 +21,7 @@ export default function NavBarHome() {
             <HomeIcon/>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1}} align="left">
-            Wallets
+            My Wallet
           </Typography>
           <Button variant="outlined" color="inherit" href='/login'>Entrar</Button>
         </Toolbar>

@@ -99,10 +99,6 @@ export default function Login() {
               error={!!errors?.senha}
               helperText={!!errors?.senha ? errors.senha.message : null}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Lembrar de mim"
-            />
             <Button
               type="submit"
               fullWidth
@@ -111,12 +107,7 @@ export default function Login() {
             >
               Entrar
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Esqueceu a senha?
-                </Link>
-              </Grid>
+            <Grid container sx={{ml:10}}>
               <Grid item>
                 <Link href="/register" variant="body2">
                   {"Não possui uma conta? Registre-se!"}

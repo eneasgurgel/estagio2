@@ -3,6 +3,20 @@ import {Home as HomeIcon} from '@mui/icons-material'
 import AuthServices from '../../services/AuthServices';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ListItemIcon from '@mui/material/ListItemIcon';
+
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
 
 function stringToColor(string: string) {
     let hash = 0;
@@ -33,6 +47,25 @@ function stringToColor(string: string) {
     };
   }
 export default function NavBarApp() {
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        
+        AuthServices.logout()
+        navigate('/')
+    }
+
+    
+const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
 
     const authed = AuthServices.getCurrentUser()
 
@@ -44,9 +77,38 @@ export default function NavBarApp() {
             Bem vindo {authed.name} | ID: {authed.id}
           </Typography>
           <Typography sx={{ m: 2 }} >
-            <Avatar {...stringAvatar(authed.name)} />
+              
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar {...stringAvatar(authed.name)} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+            <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                </ListItemIcon>
+                Deslogar
+            </MenuItem>
+            </Menu>
+          </Box>
           </Typography>
-          <Button variant="outlined" color="inherit" onClick={AuthServices.logout} href="/">Deslogar</Button>
         </Toolbar>
       </AppBar>
     </Box>
