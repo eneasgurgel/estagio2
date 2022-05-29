@@ -28,7 +28,7 @@ const currencies = [
     },
   ];
 
-export default function FormDialogTransferCoins() {
+export default function FormDialogTransferCoins(props: any) {
   const [open, setOpen] = React.useState(false);
   const { register, handleSubmit, formState: {errors}, setError } = useForm()
 
@@ -45,7 +45,7 @@ export default function FormDialogTransferCoins() {
   const tranferCoin = async ({moeda, amount, address}: any) =>{
     try{
         const data = {
-            coin: moeda,
+            coin: props.coin,
             convertFrom: moeda,
             amount: Number(amount),
             receiverAddress: address,
