@@ -74,7 +74,7 @@ const handleCloseUserMenu = () => {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1}} align="left">
-            Bem vindo {authed.name} | ID: {authed.id}
+            Bem-vindo {authed.name} | ID: {authed.id}
           </Typography>
           <Typography sx={{ m: 2 }} >
               

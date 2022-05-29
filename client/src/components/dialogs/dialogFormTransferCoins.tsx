@@ -56,7 +56,7 @@ export default function FormDialogTransferCoins(props: any) {
     
       handleClose()
     
-      return alert('Transferencia efetuada com sucesso')
+      return alert('Transferência efetuada com sucesso')
 
     }catch(err: any){
         const a = "Cast to ObjectId failed for value \"629234c561d5baf863d31eb\" (type string) at path \"_id\" for model \"Wallets\""
@@ -120,7 +120,7 @@ export default function FormDialogTransferCoins(props: any) {
               type="number" {...register("amount", {
                 min:{
                     value: 1,
-                    message: "O valor de deposito deve ser de no minimo 1"
+                    message: "O valor de depósito deve ser de no minimo 1"
                 }
         })} />
             </Box>

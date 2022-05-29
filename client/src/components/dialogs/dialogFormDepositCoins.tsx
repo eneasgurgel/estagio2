@@ -74,7 +74,7 @@ export default function FormDialogDepositCoins() {
 
     handleClose()
 
-    return alert('Deposito efetuado com sucesso')
+    return alert('Depósito efetuado com sucesso')
   }
 
   return (
@@ -133,7 +133,7 @@ export default function FormDialogDepositCoins() {
          {...register("amount", {
             min:{
                 value: 1,
-                message: "O valor de deposito deve ser de no minimo 1"
+                message: "O valor de depósito deve ser de no minimo 1"
             }
         })} />
         

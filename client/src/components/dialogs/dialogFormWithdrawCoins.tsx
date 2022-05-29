@@ -107,7 +107,7 @@ export default function FormDialogWithdrawCoins(props: any) {
          {...register("amount", {
             min:{
                 value: 1,
-                message: "O valor de deposito deve ser de no minimo 1"
+                message: "O valor de depósito deve ser de no minimo 1"
             }
         })} />
         </Box>

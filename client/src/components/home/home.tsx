@@ -45,7 +45,7 @@ export default function Home(){
               color="text.primary"
               gutterBottom
             >
-              Bem vindo ao My Wallet
+              Bem-vindo ao My Wallet
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Sua nova solução em conversão de moedas, depósitos, saques e transferências de fundos.
