@@ -56,7 +56,7 @@ export default function FormDialogTransferCoins(props: any) {
     
       handleClose()
     
-      return alert('Deposito efetuado com sucesso')
+      return alert('Transferencia efetuada com sucesso')
 
     }catch(err: any){
         const a = "Cast to ObjectId failed for value \"629234c561d5baf863d31eb\" (type string) at path \"_id\" for model \"Wallets\""

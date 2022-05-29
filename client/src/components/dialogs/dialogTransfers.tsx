@@ -40,7 +40,6 @@ export default function DialogTransfers(props: any) {
   React.useEffect( () => {
     async function getData() {
         try{
-            console.log(props)
              const res = await CoinsService.getTransactions(props.coinId)
              if(res) setTransactions(res)
              
@@ -48,7 +47,6 @@ export default function DialogTransfers(props: any) {
             
 
         }catch(err: any){
-            console.log(err.message)
             alert(err.message)
 
         }

@@ -5,8 +5,6 @@ const API_URL = process.env.URL || "https://wallets2.herokuapp.com/api/v1/coins/
 class UserService {
  async getListOfCoins() {
     const user = await AuthServices.getCurrentUser()
-    console.log(user)
-    console.log(API_URL + user.id)
    const { data } = await axios.get(API_URL + user.id);
    return data
   }

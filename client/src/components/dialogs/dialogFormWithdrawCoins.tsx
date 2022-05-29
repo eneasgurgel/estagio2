@@ -30,14 +30,13 @@ const currencies = [
 
 export default function FormDialogWithdrawCoins(props: any) {
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, formState: {errors} } = useForm()
+  const { register, handleSubmit, formState: {errors}, setError} = useForm()
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-      console.log(props.coin)
     setOpen(false);
   };
 
@@ -45,16 +44,28 @@ export default function FormDialogWithdrawCoins(props: any) {
 
 
   const withdrawCoins = async ({moeda, amount}: any) =>{
-    const data = {
-        coin: props.coin,
-        convertFrom: moeda,
-        amount: Number(amount),
-        type: "withdraw"
-    }
-    await CoinsService.addCoin(data)
-    window.location.reload()
+    try{
 
-  handleClose()
+        const data = {
+            coin: props.coin,
+            convertFrom: moeda,
+            amount: Number(amount),
+            type: "withdraw"
+        }
+        await CoinsService.addCoin(data)
+        window.location.reload()
+    
+      handleClose()
+      alert('Saque efetuado com sucesso!')
+
+
+    }catch(err: any){
+        setError('amount', {
+            type:'server',
+            message: err.message
+        })
+
+    }
 }
 
 

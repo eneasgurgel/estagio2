@@ -22,7 +22,6 @@ class AuthService {
   }
   async register(data: object) {
     const register = await axios.post(API_URL, data);
-    console.log(register)
     return register
   }
   getCurrentUser() {

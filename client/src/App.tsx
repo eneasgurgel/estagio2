@@ -50,7 +50,6 @@ function App() {
 
 function RequireAuth({children, redirectTo}:any){
     let isAuth = checkLogin()
-    console.log(isAuth)
     return isAuth ? children : <Navigate to={redirectTo}/>
 }
 
